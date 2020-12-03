@@ -1,8 +1,5 @@
 entries = [[(c == '#') for c in x] for x in open("input.txt").read().strip().split('\n')]
 
-print("rows", len(entries))
-print("columns", len(entries[0]))
-
 def isBlocked(x, y):
 	row = entries[y]
 	x = x % len(row)
@@ -33,5 +30,5 @@ def task2(entries):
 	
 	return product
 
-print("Task1", task1(entries))
-print("Task2", task2(entries))
+print("Task1:", task1(entries))
+print("Task2:", task2(entries))
