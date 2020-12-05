@@ -1,6 +1,7 @@
+from math import floor, ceil
 
-#entries = open("input.txt", "r").read().strip().split('\n')
-entries = ["FBFBBFFRLR", "BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"]
+entries = open("input.txt", "r").read().strip().split('\n')
+#entries = ["FBFBBFFRLR", "BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"]
 
 rows = 127
 cols = 7
@@ -8,32 +9,29 @@ cols = 7
 passes = []
 
 for entry in entries:
-	prevRow = rows
-	row = rows // 2
-	prevCol = cols
-	col = cols // 2
+	rowMax = rows
+	rowMin = 0
+	row = 0
+	colMax = cols
+	colMin = 0
+	col = 0
 	
 	for c in entry:
 		if c == 'F':
-			nPrev = row
-			row = row - round((prevRow - row) / 2)
-			prevRow = nPrev
+			rowMax -= ((rowMax - rowMin) // 2) + 1
+			row = rowMin
 		elif c == 'B':
-			nPrev = row
-			row = row + round((prevRow - row) / 2)
+			rowMin += ((rowMax - rowMin) // 2) + 1
+			row = rowMax
 		elif c == 'L':
-			nPrev = col
-			col = col - round((prevCol - col) / 2)
-			prevCol = nPrev
+			colMax -= ((colMax - colMin) // 2) + 1
+			col = colMin
 		elif c == 'R':
-			nPrev = col
-			col = col + round((prevCol - col) / 2)
-			prevCol = nPrev
+			colMin += ((colMax - colMin) // 2) + 1
+			col = colMax
 	
 	seatId = (row * 8) + col
 	passes.append((row, col, seatId))
-	
-	print(entry, row, col, seatId)
 
 
 def task1(passes):
@@ -43,5 +41,18 @@ def task1(passes):
 			highest = seatId
 	return highest
 
+def task2(passes):
+	ids = set()
+	for (row, col, seatId) in passes:
+		ids.add(seatId)
+	for id in ids:
+		if id + 1 not in ids:
+			if id + 2 in ids:
+				return id + 1
+		elif id - 1 not in ids:
+			if id - 2 in ids:
+				return id - 1
+
 print("Task1:", task1(passes))
+print("Task2:", task2(passes))
 
