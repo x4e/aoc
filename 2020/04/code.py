@@ -83,6 +83,3 @@ def task2(entries):
 
 print("Task1:", task1(entries))
 print("Task2:", task2(entries))
-
-			
-	
