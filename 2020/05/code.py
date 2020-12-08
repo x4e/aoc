@@ -1,7 +1,6 @@
 from math import floor, ceil
 
 entries = open("input.txt", "r").read().strip().split('\n')
-#entries = ["FBFBBFFRLR", "BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"]
 
 rows = 127
 cols = 7
