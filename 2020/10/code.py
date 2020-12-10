@@ -23,4 +23,29 @@ def task1(adapters):
 	
 	return oneVolt * threeVolt
 
+def task2(adapters):
+	paths = {}
+	
+	paths[0] = 1 # supply
+	i = 1
+	while i < len(adapters):
+		adapter = adapters[i]
+		
+		routes = 0
+		i2 = i - 1
+		while i2 >= 0:
+			adap2 = adapters[i2]
+			diff = adapter - adap2
+			if diff > 3:
+				break
+			else:
+				routes += paths[i2]
+			i2 -= 1
+		paths[i] = routes
+		
+		i += 1
+	
+	return paths[len(adapters) - 1]
+
 print(task1(adapters))
+print(task2(adapters))
