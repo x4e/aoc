@@ -1,2 +1,3 @@
 a.out
 .fuse_hidden*
+*.pyc
