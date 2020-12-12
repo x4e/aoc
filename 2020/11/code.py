@@ -125,5 +125,5 @@ def task2(seats):
 		y += 1
 	return occupied
 
-print(task1(seats))
-print(task2(seats))
+print("Task1:", task1(seats))
+print("Task2:", task2(seats))
