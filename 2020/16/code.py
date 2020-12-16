@@ -2,6 +2,7 @@ lines = open("input.txt", "r").read().strip().split("\n")
 
 rules = {}
 
+# Parse Rules
 i = 0
 while i < len(lines):
 	line = lines[i]
@@ -14,10 +15,12 @@ while i < len(lines):
 		rules[name] = ranges
 	i += 1
 
+# Parse my ticket
 i += 2
 myTicket = [int(x) for x in lines[i].split(",")]
-i += 3
 
+# Parse nearby tickets
+i += 3
 nearby = []
 while i < len(lines):
 	line = lines[i]
@@ -27,22 +30,27 @@ while i < len(lines):
 		nearby.append([int(x) for x in line.split(",")])
 	i += 1
 
+# Does a number match the given rule? (rule is given as an array of the valid ranges)
 def validateRule(num, ranges):
 	for range in ranges:
 		if num >= range[0] and num <= range[1]:
 			return True
 	return False
 
+# If at least one rule will validate the value/field then it is considered valid
+def valueValid(value, rules):
+	valid = False
+	for (name, ranges) in rules.items():
+		if validateRule(value, ranges):
+			valid = True
+			break
+	return valid
+
 def task1(rules, nearby):
 	scanErrorRate = 0
 	for ticket in nearby:
 		for value in ticket:
-			valid = False
-			for (name, ranges) in rules.items():
-				if validateRule(value, ranges):
-					valid = True
-					break
-			if not valid:
+			if not valueValid(value, rules):
 				scanErrorRate += value
 	return scanErrorRate
 
@@ -52,12 +60,7 @@ def task2(rules, nearby, myTicket):
 	for ticket in nearby:
 		validTicket = True
 		for value in ticket:
-			valid = False
-			for (name, ranges) in rules.items():
-				if validateRule(value, ranges):
-					valid = True
-					break
-			if not valid:
+			if not valueValid(value, rules):
 				validTicket = False
 				break
 		if validTicket:
